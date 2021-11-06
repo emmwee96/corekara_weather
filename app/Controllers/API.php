@@ -107,7 +107,7 @@ class API extends BaseController
                 //     "icon" => "https://openweathermap.org/img/wn/" . $current_weather['weather'][0]['icon'] . "@4x.png",
                 // );
 
-                // forecast for the week days
+                // forecast for the week
                 $url = "https://api.openweathermap.org/data/2.5/onecall?lat=" . $lat . "&lon=" . $lng . "&exclude=minutely,hourly,alerts&units=metric&appid=3aee5d3d3c5d4ab3e9b6da0829e1ea42";
                 $weather_data = $this->conn($url);
                 $weather_data = json_decode($weather_data, true);
