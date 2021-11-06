@@ -93,34 +93,33 @@ class API extends BaseController
             }
 
             if (!$error) {
-                // forecast for today
-                $url = "api.openweathermap.org/data/2.5/find?lat=" . $lat . "&lon=" . $lng . "&cnt=1&units=metric&appid=3aee5d3d3c5d4ab3e9b6da0829e1ea42";
-                $current_weather = $this->conn($url);
-                $current_weather = json_decode($current_weather, true);
-                $current_weather = $current_weather['list'][0];
+                // // forecast for today
+                // $url = "api.openweathermap.org/data/2.5/find?lat=" . $lat . "&lon=" . $lng . "&cnt=1&units=metric&appid=3aee5d3d3c5d4ab3e9b6da0829e1ea42";
+                // $current_weather = $this->conn($url);
+                // $current_weather = json_decode($current_weather, true);
+                // $current_weather = $current_weather['list'][0];
 
-                $forecast[0] = array(
-                    "date" => gmdate("Y-m-d D", $current_weather['dt']),
-                    "max" => round($current_weather['main']['temp_max']),
-                    "min" => round($current_weather['main']['temp_min']),
-                    "weather" => $current_weather['weather'][0]['main'],
-                    "icon" => "https://openweathermap.org/img/wn/" . $current_weather['weather'][0]['icon'] . "@4x.png",
-                );
+                // $forecast[0] = array(
+                //     "date" => gmdate("Y-m-d D", $current_weather['dt']),
+                //     "max" => round($current_weather['main']['temp_max']),
+                //     "min" => round($current_weather['main']['temp_min']),
+                //     "weather" => $current_weather['weather'][0]['main'],
+                //     "icon" => "https://openweathermap.org/img/wn/" . $current_weather['weather'][0]['icon'] . "@4x.png",
+                // );
 
-                // forecast for next 8 days
+                // forecast for the week days
                 $url = "https://api.openweathermap.org/data/2.5/onecall?lat=" . $lat . "&lon=" . $lng . "&exclude=minutely,hourly,alerts&units=metric&appid=3aee5d3d3c5d4ab3e9b6da0829e1ea42";
                 $weather_data = $this->conn($url);
                 $weather_data = json_decode($weather_data, true);
 
-                for ($i = 1; $i <= 2; $i++) {
-                    $index = $i - 1;
+                for ($i = 0; $i < 3; $i++) {
 
                     $forecast[$i] = array(
-                        "date" => gmdate("Y-m-d D", $weather_data['daily'][$index]['dt']),
-                        "max" => round($weather_data['daily'][$index]['temp']['max']),
-                        "min" => round($weather_data['daily'][$index]['temp']['min']),
-                        "weather" => $weather_data['daily'][$index]['weather'][0]['main'],
-                        "icon" => "https://openweathermap.org/img/wn/" . $weather_data['daily'][$index]['weather'][0]['icon'] . "@4x.png",
+                        "date" => gmdate("Y-m-d D", $weather_data['daily'][$i]['dt']),
+                        "max" => round($weather_data['daily'][$i]['temp']['max']),
+                        "min" => round($weather_data['daily'][$i]['temp']['min']),
+                        "weather" => $weather_data['daily'][$i]['weather'][0]['main'],
+                        "icon" => "https://openweathermap.org/img/wn/" . $weather_data['daily'][$i]['weather'][0]['icon'] . "@4x.png",
                     );
                 }
 
